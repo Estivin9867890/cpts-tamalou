@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* ── Base ── */
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f1f5f9; color: #1e293b; -webkit-font-smoothing: antialiased; }
+
+/* ── Skip link (accessibilité) ── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+}
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 12px 24px;
+  background: #1d4ed8;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  outline: 3px solid #fbbf24;
+}
+
+/* ── Focus visible (accessibilité RGAA) ── */
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── Leaflet overrides ── */
+.leaflet-container { font-family: inherit; background: #e2e8f0; isolation: isolate; }
+.leaflet-control-attribution { background: rgba(255,255,255,0.85) !important; font-size: 10px !important; color: #64748b !important; }
+.leaflet-control-attribution a { color: #2563eb !important; }
+.leaflet-control-zoom a {
+  background: white !important;
+  color: #374151 !important;
+  border-color: #d1d5db !important;
+  font-size: 16px !important;
+  line-height: 28px !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.leaflet-control-zoom a:hover { background: #f8fafc !important; color: #1d4ed8 !important; }
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15) !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content { margin: 0 !important; }
+.leaflet-popup-tip { background: white !important; }
+.leaflet-popup-close-button {
+  top: 8px !important;
+  right: 8px !important;
+  color: #64748b !important;
+  font-size: 18px !important;
+}
+
+/* ── User location pulse ── */
+@keyframes locPulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  70%  { transform: scale(2.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.user-loc-pulse { animation: locPulse 2s ease-out infinite; }
+
+/* ── Date input dark ── */
+input[type="date"], input[type="time"] { color-scheme: light; }
+
+/* ── Animations ── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.2s ease; }
