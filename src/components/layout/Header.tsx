@@ -67,7 +67,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5" aria-label="CPTS Tamalou — Accueil">
-            <div className="w-8 h-8 rounded-lg bg-[#1d1d1f] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#1d4ed8] flex items-center justify-center">
               <span className="text-white font-bold text-xs leading-none tracking-tight">A+</span>
             </div>
             <div className="hidden sm:block">
@@ -168,7 +168,7 @@ export default function Header() {
               aria-label={`Menu utilisateur — ${user.prenom} ${user.nom}`}
               className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-[#f5f5f7] transition-colors"
             >
-              <div className="w-7 h-7 rounded-full bg-[#1d1d1f] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-[#1d4ed8] flex items-center justify-center">
                 <span className="text-white text-[11px] font-semibold">{user.avatar}</span>
               </div>
               <div className="hidden sm:block text-left">

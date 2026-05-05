@@ -7,6 +7,7 @@ import AppLayout from '@/components/layout/AppLayout'
 import Breadcrumb from '@/components/layout/Breadcrumb'
 import { useAuth } from '@/providers/AuthProvider'
 import { getProfessionnelById, getSpecialiteById, getCompetenceById, getPathologieById, getStructureById } from '@/data/mockData'
+import { useFavorites } from '@/providers/FavoritesProvider'
 
 const SECTEUR_LABELS: Record<string, string> = {
   '1': 'Secteur 1', '2': 'Secteur 2', '3': 'Secteur 3', 'NON_CONVENTIONNE': 'Non conventionné',
@@ -30,6 +31,8 @@ export default function FicheProfessionnelPage({ params }: { params: Promise<{ i
   const canEdit = canSeeRestricted || isOwner
 
   const initials = `${pro.prenom[0]}${pro.nom[0]}`.toUpperCase()
+  const { isFavorite, toggleFavorite } = useFavorites()
+  const favori = isFavorite(pro.id)
 
   return (
     <AppLayout>
@@ -42,10 +45,10 @@ export default function FicheProfessionnelPage({ params }: { params: Promise<{ i
 
         {/* Profile header */}
         <div className="bg-white rounded-2xl border border-[#d2d2d7] mb-6 overflow-hidden">
-          <div className="bg-[#1d1d1f] h-16" />
+          <div className="bg-[#1d4ed8] h-16" />
           <div className="px-6 pb-6">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-8 mb-5">
-              <div className="w-18 h-18 w-[72px] h-[72px] rounded-2xl bg-[#1d1d1f] flex items-center justify-center text-white font-bold text-2xl border-4 border-white shrink-0">
+              <div className="w-[72px] h-[72px] rounded-2xl bg-[#1d4ed8] flex items-center justify-center text-white font-bold text-2xl border-4 border-white shrink-0">
                 {initials}
               </div>
               <div className="flex-1 min-w-0 pb-1">
@@ -56,16 +59,34 @@ export default function FicheProfessionnelPage({ params }: { params: Promise<{ i
                     </h1>
                     <p className="text-[#6e6e73] text-sm mt-0.5">{specialite?.libelle}</p>
                   </div>
-                  {canEdit && (
-                    <Link
-                      href="/mon-profil"
-                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] rounded-xl transition-colors"
-                      aria-label="Modifier cette fiche"
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleFavorite(pro.id)}
+                      aria-label={favori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-[#f5f5f7] hover:bg-[#eff6ff] rounded-xl transition-colors"
                     >
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" /></svg>
-                      Modifier
-                    </Link>
-                  )}
+                      <svg
+                        className={`w-4 h-4 transition-colors ${favori ? 'text-[#1d4ed8] fill-[#1d4ed8]' : 'text-[#d2d2d7]'}`}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        fill={favori ? 'currentColor' : 'none'}
+                        strokeWidth={1.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                      </svg>
+                      {favori ? 'Favori' : 'Ajouter aux favoris'}
+                    </button>
+                    {canEdit && (
+                      <Link
+                        href="/mon-profil"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] rounded-xl transition-colors"
+                        aria-label="Modifier cette fiche"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" /></svg>
+                        Modifier
+                      </Link>
+                    )}
+                  </div>
                 </div>
 
                 {/* Status badges */}

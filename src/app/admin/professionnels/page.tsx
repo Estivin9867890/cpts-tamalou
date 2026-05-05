@@ -87,7 +87,7 @@ export default function AdminProfessionnelsPage() {
                 className={clsx(
                   'px-3 py-2.5 rounded-xl text-sm font-medium capitalize transition-colors border',
                   filterActif === v
-                    ? 'bg-[#1d1d1f] text-white border-[#1d1d1f]'
+                    ? 'bg-[#1d4ed8] text-white border-[#1d1d1f]'
                     : 'bg-white text-[#6e6e73] border-[#d2d2d7] hover:bg-[#f5f5f7]'
                 )}>
                 {v.charAt(0).toUpperCase() + v.slice(1)}
@@ -116,7 +116,7 @@ export default function AdminProfessionnelsPage() {
                   <tr key={pro.id} className="hover:bg-[#f5f5f7] transition-colors">
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#1d1d1f] flex items-center justify-center text-white text-xs font-semibold shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-[#1d4ed8] flex items-center justify-center text-white text-xs font-semibold shrink-0">
                           {pro.prenom[0]}{pro.nom[0]}
                         </div>
                         <div>

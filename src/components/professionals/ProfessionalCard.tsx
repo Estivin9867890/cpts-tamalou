@@ -1,12 +1,7 @@
 import Link from 'next/link'
 import type { Professionnel } from '@/types'
 import { getSpecialiteById, getCompetenceById, getStructureById } from '@/data/mockData'
-
-const TYPE_LABELS: Record<string, string> = {
-  CABINET_LIBERAL: 'Cabinet libéral', HOPITAL: 'Hôpital',
-  CLINIQUE: 'Clinique', MSP: 'MSP', CPTS: 'CPTS',
-  EHPAD: 'EHPAD', AUTRE: 'Centre de santé',
-}
+import { useFavorites } from '@/providers/FavoritesProvider'
 
 interface Props { pro: Professionnel; distanceKm?: number }
 
@@ -15,32 +10,49 @@ export default function ProfessionalCard({ pro, distanceKm }: Props) {
   const structurePrincipale = getStructureById(pro.structures[0]?.id_structure)
   const competencesAffichees = pro.competences.slice(0, 3).map(c => getCompetenceById(c.id_competence)).filter(Boolean)
   const initials = `${pro.prenom[0]}${pro.nom[0]}`.toUpperCase()
-
-  void TYPE_LABELS
+  const { isFavorite, toggleFavorite } = useFavorites()
+  const favori = isFavorite(pro.id)
 
   return (
-    <article className="bg-white rounded-2xl border border-[#d2d2d7] p-4 hover:border-[#0071e3] transition-colors fade-in">
+    <article className="bg-white rounded-2xl border border-[#d2d2d7] p-4 hover:border-[#1d4ed8] transition-colors fade-in">
       <div className="flex items-start gap-3">
         {/* Avatar */}
-        <div className="w-11 h-11 rounded-xl bg-[#1d1d1f] flex items-center justify-center shrink-0 text-white font-semibold text-sm">
+        <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] flex items-center justify-center shrink-0 text-white font-semibold text-sm">
           {initials}
         </div>
 
         <div className="flex-1 min-w-0">
           {/* Name + specialty */}
           <div className="flex items-start justify-between gap-2">
-            <div>
+            <div className="flex-1 min-w-0">
               <Link
                 href={`/annuaire/professionnel/${pro.id}`}
-                className="font-semibold text-[#1d1d1f] text-sm hover:text-[#0071e3] transition-colors line-clamp-1"
+                className="font-semibold text-[#1d1d1f] text-sm hover:text-[#1d4ed8] transition-colors line-clamp-1"
               >
                 {pro.titre && `${pro.titre} `}{pro.prenom} {pro.nom}
               </Link>
               <p className="text-xs text-[#6e6e73] mt-0.5">{specialite?.libelle}</p>
             </div>
-            {distanceKm !== undefined && (
-              <span className="text-xs text-[#6e6e73] shrink-0 bg-[#f5f5f7] px-2 py-1 rounded-full">{distanceKm.toFixed(1)} km</span>
-            )}
+            <div className="flex items-center gap-1.5 shrink-0">
+              {distanceKm !== undefined && (
+                <span className="text-xs text-[#6e6e73] bg-[#f5f5f7] px-2 py-1 rounded-full">{distanceKm.toFixed(1)} km</span>
+              )}
+              <button
+                onClick={e => { e.preventDefault(); toggleFavorite(pro.id) }}
+                aria-label={favori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                className="p-1 rounded-lg hover:bg-[#f5f5f7] transition-colors"
+              >
+                <svg
+                  className={`w-4 h-4 transition-colors ${favori ? 'text-[#1d4ed8] fill-[#1d4ed8]' : 'text-[#d2d2d7]'}`}
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  fill={favori ? 'currentColor' : 'none'}
+                  strokeWidth={1.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Structure */}
@@ -66,7 +78,7 @@ export default function ProfessionalCard({ pro, distanceKm }: Props) {
               </span>
             )}
             {pro.teleconsultation && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#f5f5f7] text-[#1d1d1f] border border-[#d2d2d7]">
+              <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe]">
                 Téléconsultation
               </span>
             )}
@@ -81,7 +93,7 @@ export default function ProfessionalCard({ pro, distanceKm }: Props) {
           {competencesAffichees.length > 0 && (
             <div className="flex gap-1 mt-2 flex-wrap">
               {competencesAffichees.map(c => c && (
-                <span key={c.id} className="text-[10px] px-2 py-0.5 bg-[#f5f5f7] text-[#6e6e73] rounded-full border border-[#d2d2d7]">
+                <span key={c.id} className="text-[10px] px-2 py-0.5 bg-[#eff6ff] text-[#1d4ed8] rounded-full border border-[#bfdbfe]">
                   {c.libelle}
                 </span>
               ))}
@@ -97,7 +109,7 @@ export default function ProfessionalCard({ pro, distanceKm }: Props) {
 
       <Link
         href={`/annuaire/professionnel/${pro.id}`}
-        className="mt-3 flex items-center justify-center gap-1.5 w-full py-2 text-xs font-medium text-[#0071e3] hover:bg-[#f5f5f7] rounded-xl transition-colors border border-[#d2d2d7]"
+        className="mt-3 flex items-center justify-center gap-1.5 w-full py-2 text-xs font-medium text-[#1d4ed8] hover:bg-[#eff6ff] rounded-xl transition-colors border border-[#d2d2d7]"
       >
         Voir la fiche
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="m9 18 6-6-6-6" /></svg>

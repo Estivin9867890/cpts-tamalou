@@ -89,7 +89,7 @@ export default function AdminPage() {
             <div className="bg-white rounded-2xl border border-[#d2d2d7] divide-y divide-[#f5f5f7]">
               {professionnels.slice(0, 6).map(pro => (
                 <div key={pro.id} className="flex items-center gap-3 px-5 py-3">
-                  <div className="w-8 h-8 rounded-full bg-[#1d1d1f] flex items-center justify-center text-white text-xs font-semibold shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-[#1d4ed8] flex items-center justify-center text-white text-xs font-semibold shrink-0">
                     {pro.prenom[0]}{pro.nom[0]}
                   </div>
                   <div className="flex-1 min-w-0">

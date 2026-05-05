@@ -36,18 +36,18 @@ export default function ConnexionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1d1d1f] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#1e3a8a] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
 
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white mb-5">
-            <div className="w-9 h-9 rounded-xl bg-[#1d1d1f] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#1d4ed8] flex items-center justify-center">
               <span className="text-white font-bold text-sm tracking-tight">A+</span>
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-white tracking-tight">Annuaire CPTS Tamalou</h1>
-          <p className="text-[#6e6e73] text-sm mt-1.5">Professionnels de santé — Finistère</p>
+          <p className="text-[#93c5fd] text-sm mt-1.5">Professionnels de santé — Finistère</p>
         </div>
 
         {/* Card */}
@@ -148,7 +148,7 @@ export default function ConnexionPage() {
           </div>
         </div>
 
-        <p className="text-center text-[#6e6e73] text-xs mt-6">
+        <p className="text-center text-[#93c5fd] text-xs mt-6">
           Accès réservé aux professionnels de santé de la CPTS Tamalou
         </p>
       </div>

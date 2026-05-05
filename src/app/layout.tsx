@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { AuthProvider } from '@/providers/AuthProvider'
+import { FavoritesProvider } from '@/providers/FavoritesProvider'
 
 export const metadata: Metadata = {
   title: { default: 'Annuaire CPTS Tamalou', template: '%s — CPTS Tamalou' },
@@ -12,7 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <body>
         <a href="#main-content" className="skip-link">Aller au contenu principal</a>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <FavoritesProvider>{children}</FavoritesProvider>
+        </AuthProvider>
       </body>
     </html>
   )
