@@ -15,10 +15,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#f5f5f7]">
         <div className="text-center">
-          <div className="w-10 h-10 border-3 border-blue-700 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderWidth: '3px' }} />
-          <p className="text-slate-500 text-sm">Chargement…</p>
+          <div className="w-8 h-8 border-2 border-[#1d1d1f] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-[#6e6e73] text-sm">Chargement…</p>
         </div>
       </div>
     )
@@ -27,7 +27,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   if (!user) return null
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-[#f5f5f7]">
       <Header />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         {children}
